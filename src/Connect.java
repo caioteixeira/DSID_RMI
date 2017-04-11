@@ -1,4 +1,6 @@
 import java.awt.Font;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.rmi.Naming;
 
 import javax.swing.JLabel;
@@ -8,6 +10,15 @@ public class Connect extends Interface{
 
 	public Connect(String host){
 		try{
+			addWindowListener(new WindowAdapter()
+			{
+			    public void windowClosing(WindowEvent e)
+			    {
+			    	Interface home = new Home();
+					home.setVisible(true);
+					dispose();
+			    }
+			});
 			PartRepositor pr = (PartRepositor) Naming.lookup("rmi://"+host+"/PartService");
 			
 			JLabel teste = new JLabel(pr.teste());

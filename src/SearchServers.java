@@ -1,0 +1,122 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.rmi.ConnectException;
+import java.rmi.Naming;
+import java.rmi.UnknownHostException;
+
+public class SearchServers implements Runnable{
+	
+	private boolean roda = true;
+
+	private String getSubNet(){
+		try{
+			Process result = Runtime.getRuntime().exec("ipconfig");
+	
+	        BufferedReader output = new BufferedReader(new InputStreamReader(result.getInputStream()));
+	        String thisLine = output.readLine();
+	        int leng = thisLine.length();
+	       
+	        while(true){
+	        	if(thisLine != null && leng > 1){
+		        	if(thisLine.contains("Gateway") && Character.isDigit(thisLine.charAt(leng-1))){
+		        		break;
+		        	}
+	        	}
+	        	thisLine = output.readLine();
+	    		leng = thisLine.length();
+	        }
+	        output.close();
+	        return trataString(thisLine);
+	        
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private String trataString(String s){
+		char[] c1 = s.toCharArray();
+		int cont = 0;
+		int i = c1.length - 1;
+		int j = 0;
+		while (i > 0) {
+			if(c1[i] == '.'){
+				cont++;
+				if(cont == 1){
+					j = i;
+				}
+			}
+			i--;
+			if(cont >= 3) break;
+		}
+		while(Character.isDigit(s.charAt(i))){
+			i--;
+		}
+		return s.substring(i+1, j);
+	}
+	
+	private void findServers(){
+		String subnet = getSubNet();
+		try{
+		   int timeout=1000;
+		   for (int i=1;i<255;i++){
+			   if(!roda) return;
+		       String host=subnet + "." + i;
+		       if (InetAddress.getByName(host).isReachable(timeout)){
+		           if(isServer(host)){
+		        	   Home.insereServ(InetAddress.getByName(host).getHostName(), host);
+		        	   Home.updateTable();
+		           }
+		       }
+		   	}
+		   
+		   subnet = subnet.substring(0, subnet.length() - 2);
+		   
+		   for (int i=0;i<255;i++){
+		       String host=subnet + "." + i;
+		       for(int j=1; j<255; j++){
+				   if(!roda) return;
+		    	   host=host + "." + j;
+				   System.out.println(host);
+			       if (InetAddress.getByName(host).isReachable(timeout)){
+			           if(isServer(host)){
+			        	   Home.insereServ(InetAddress.getByName(host).getHostName(), host);
+			        	   Home.updateTable();
+			           }
+			       }
+		       }
+		   	}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	public static boolean isServer(String host){
+		try{
+			Naming.lookup("rmi://"+ host + ":1099/PartService");
+			return true;
+		}catch(ConnectException e){
+			return false;
+		}catch(UnknownHostException e){
+			return false;	
+		}catch(MalformedURLException e){
+			return false;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public void run() {
+		while(roda){
+			findServers();
+		}
+	}
+	
+	public void stop(){
+		roda = false;
+	}
+}

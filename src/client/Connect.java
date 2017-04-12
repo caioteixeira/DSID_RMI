@@ -1,9 +1,12 @@
+package client;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.Naming;
 
 import javax.swing.JLabel;
+
+import server.PartRepository;
 
 public class Connect extends Interface{
 	private static final long serialVersionUID = 1L;
@@ -19,7 +22,7 @@ public class Connect extends Interface{
 					dispose();
 			    }
 			});
-			PartRepositor pr = (PartRepositor) Naming.lookup("rmi://"+host+"/PartService");
+			PartRepository pr = (PartRepository) Naming.lookup("rmi://"+host+"/PartService");
 			
 			JLabel teste = new JLabel(pr.teste());
 			teste.setFont(new Font("Tahoma", Font.PLAIN, 18));

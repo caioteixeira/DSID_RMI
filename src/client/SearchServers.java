@@ -1,3 +1,4 @@
+package client;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -79,7 +80,6 @@ public class SearchServers implements Runnable{
 		       for(int j=1; j<255; j++){
 				   if(!roda) return;
 		    	   host=host + "." + j;
-				   System.out.println(host);
 			       if (InetAddress.getByName(host).isReachable(timeout)){
 			           if(isServer(host)){
 			        	   Home.insereServ(InetAddress.getByName(host).getHostName(), host);
@@ -97,16 +97,12 @@ public class SearchServers implements Runnable{
 		try{
 			Naming.lookup("rmi://"+ host + ":1099/PartService");
 			return true;
-		}catch(ConnectException e){
-			return false;
-		}catch(UnknownHostException e){
-			return false;	
-		}catch(MalformedURLException e){
+		}catch(ConnectException | UnknownHostException | MalformedURLException e){
 			return false;
 		}catch(Exception e){
 			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	@Override

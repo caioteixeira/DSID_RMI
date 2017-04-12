@@ -1,3 +1,4 @@
+package client;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -31,6 +33,7 @@ public class Home extends Interface {
 	private String select = null;
 	
 	public Home(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTextField ip = new JTextField("Digite o NOME ou IP");
 		ip.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ip.setBounds(25, 20, 150, 30); // setBounds(x, y, largura, altura)

@@ -1,3 +1,4 @@
+package client;
 import java.awt.EventQueue;
 
 public class MainClient {

@@ -4,22 +4,27 @@ import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.ExportException;
 
-public class MainServer {
-	
-	public MainServer(){
-		try{
+public class MainServer 
+{
+	public MainServer()
+	{
+		try
+		{
 			System.setProperty("java.rmi.server.hostname","127.0.0.1");
 			LocateRegistry.createRegistry(1099);
-			PartRep pr = new PartRep();
+			PartRepository pr = new PartRepository();
 			Naming.bind("PartService", (Remote)pr);
-		}catch(ExportException e){
+		}catch(ExportException e)
+		{
 			System.exit(0);
-		}catch(Exception e){
+		}catch(Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		new MainServer();
 	}
 

@@ -9,9 +9,10 @@ import java.rmi.UnknownHostException;
 
 public class SearchServers implements Runnable{
 	
-	private boolean roda = true;
+	private boolean run = true;
 
-	private String getSubNet(){
+	private String getSubNet()
+	{
 		try{
 			Process result = Runtime.getRuntime().exec("ipconfig");
 	
@@ -29,7 +30,7 @@ public class SearchServers implements Runnable{
 	    		leng = thisLine.length();
 	        }
 	        output.close();
-	        return trataString(thisLine);
+	        return buildSubnetString(thisLine);
 	        
 		}catch(Exception e){
 			e.printStackTrace();
@@ -37,7 +38,8 @@ public class SearchServers implements Runnable{
 		return null;
 	}
 	
-	private String trataString(String s){
+	private String buildSubnetString(String s)
+	{
 		char[] c1 = s.toCharArray();
 		int cont = 0;
 		int i = c1.length - 1;
@@ -58,12 +60,13 @@ public class SearchServers implements Runnable{
 		return s.substring(i+1, j);
 	}
 	
-	private void findServers(){
+	private void findServers()
+	{
 		String subnet = getSubNet();
 		try{
 		   int timeout=1000;
 		   for (int i=1;i<255;i++){
-			   if(!roda) return;
+			   if(!run) return;
 		       String host=subnet + "." + i;
 		       if (InetAddress.getByName(host).isReachable(timeout)){
 		           if(isServer(host)){
@@ -78,7 +81,7 @@ public class SearchServers implements Runnable{
 		   for (int i=0;i<255;i++){
 		       String host=subnet + "." + i;
 		       for(int j=1; j<255; j++){
-				   if(!roda) return;
+				   if(!run) return;
 		    	   host=host + "." + j;
 			       if (InetAddress.getByName(host).isReachable(timeout)){
 			           if(isServer(host)){
@@ -93,7 +96,8 @@ public class SearchServers implements Runnable{
 		}
 	}
 	
-	public static boolean isServer(String host){
+	public static boolean isServer(String host)
+	{
 		try{
 			Naming.lookup("rmi://"+ host + ":1099/PartService");
 			return true;
@@ -106,13 +110,16 @@ public class SearchServers implements Runnable{
 	}
 
 	@Override
-	public void run() {
-		while(roda){
+	public void run() 
+	{
+		while(run)
+		{
 			findServers();
 		}
 	}
 	
-	public void stop(){
-		roda = false;
+	public void stop()
+	{
+		run = false;
 	}
 }

@@ -6,7 +6,7 @@ import java.rmi.Naming;
 
 import javax.swing.JLabel;
 
-import server.PartRepository;
+import server.IPartRepository;
 
 public class Connect extends Interface{
 	private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class Connect extends Interface{
 					dispose();
 			    }
 			});
-			PartRepository pr = (PartRepository) Naming.lookup("rmi://"+host+"/PartService");
+			IPartRepository pr = (IPartRepository) Naming.lookup("rmi://"+host+"/PartService");
 			
 			JLabel teste = new JLabel(pr.teste());
 			teste.setFont(new Font("Tahoma", Font.PLAIN, 18));

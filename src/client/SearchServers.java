@@ -6,6 +6,10 @@ import java.net.MalformedURLException;
 import java.rmi.ConnectException;
 import java.rmi.Naming;
 import java.rmi.UnknownHostException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
+import server.IPartRepository;
 
 public class SearchServers implements Runnable{
 	
@@ -64,7 +68,7 @@ public class SearchServers implements Runnable{
 	{
 		String subnet = getSubNet();
 		try{
-		   int timeout=1000;
+		   int timeout=100;
 		   for (int i=1;i<255;i++){
 			   if(!run) return;
 		       String host=subnet + "." + i;
@@ -98,13 +102,17 @@ public class SearchServers implements Runnable{
 	
 	public static boolean isServer(String host)
 	{
-		try{
-			Naming.lookup("rmi://"+ host + ":1099/PartService");
+		try
+		{			
+			System.out.println("IsServer: " + host);
+			Registry registry = LocateRegistry.getRegistry(host);
+			IPartRepository repo = (IPartRepository) registry.lookup("IPartRepository");
+			String response = repo.teste();
+			System.out.println("Response: " + response);
+			
 			return true;
-		}catch(ConnectException | UnknownHostException | MalformedURLException e){
-			return false;
-		}catch(Exception e){
-			e.printStackTrace();
+		}
+		catch(Exception e){     
 			return false;
 		}
 	}

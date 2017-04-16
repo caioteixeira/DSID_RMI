@@ -2,7 +2,7 @@ package server;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class PartRepository extends UnicastRemoteObject implements IPartRepository {
+public class PartRepository implements IPartRepository {
 	
 	private static final long serialVersionUID = 1L;
 	

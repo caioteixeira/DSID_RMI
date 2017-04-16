@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.rmi.Naming;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import javax.swing.JLabel;
 
@@ -22,7 +24,9 @@ public class Connect extends Interface{
 					dispose();
 			    }
 			});
-			IPartRepository pr = (IPartRepository) Naming.lookup("rmi://"+host+"/PartService");
+//			IPartRepository pr = (IPartRepository) Naming.lookup("rmi://"+host+"/PartService");
+			Registry registry = LocateRegistry.getRegistry(host);
+			IPartRepository pr = (IPartRepository) registry.lookup("IPartRepository");
 			
 			JLabel teste = new JLabel(pr.teste());
 			teste.setFont(new Font("Tahoma", Font.PLAIN, 18));

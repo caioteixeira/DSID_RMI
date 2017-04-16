@@ -2,10 +2,6 @@ package client;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.rmi.ConnectException;
-import java.rmi.Naming;
-import java.rmi.UnknownHostException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
@@ -74,7 +70,7 @@ public class SearchServers implements Runnable{
 		       String host=subnet + "." + i;
 		       if (InetAddress.getByName(host).isReachable(timeout)){
 		           if(isServer(host)){
-		        	   Home.insereServ(InetAddress.getByName(host).getHostName(), host);
+		        	   Home.insertServ(InetAddress.getByName(host).getHostName(), host);
 		        	   Home.updateTable();
 		           }
 		       }
@@ -89,7 +85,7 @@ public class SearchServers implements Runnable{
 		    	   host=host + "." + j;
 			       if (InetAddress.getByName(host).isReachable(timeout)){
 			           if(isServer(host)){
-			        	   Home.insereServ(InetAddress.getByName(host).getHostName(), host);
+			        	   Home.insertServ(InetAddress.getByName(host).getHostName(), host);
 			        	   Home.updateTable();
 			           }
 			       }

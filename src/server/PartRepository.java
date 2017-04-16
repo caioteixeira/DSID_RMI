@@ -1,10 +1,7 @@
 package server;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 public class PartRepository implements IPartRepository {
-	
-	private static final long serialVersionUID = 1L;
 	
 	public PartRepository() throws RemoteException 
 	{
@@ -18,21 +15,20 @@ public class PartRepository implements IPartRepository {
 	}
 
 	@Override
-	public void insertPart(Part p) throws RemoteException
+	public void insertPart(IPart p) throws RemoteException
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Part getPart(int cod) throws RemoteException
+	public IPart getPart(int cod) throws RemoteException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new Part();
 	}
 
 	@Override
-	public Part[] getAllParts() throws RemoteException
+	public IPart[] getAllParts() throws RemoteException
 	{
 		// TODO Auto-generated method stub
 		return null;

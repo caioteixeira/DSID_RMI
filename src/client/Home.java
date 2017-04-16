@@ -27,8 +27,8 @@ public class Home extends Interface {
 	private boolean lock = false;
 	private static ArrayList<String> servs = new ArrayList<String>();
 	private SearchServers servers;
-	private static String[][] dados = new String[13][1];
-	private String[] colunas = {"SERVIDOR"};
+	private static String[][] data = new String[13][1];
+	private String[] cols = {"SERVIDOR"};
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	private String select = null;
 	
@@ -61,7 +61,7 @@ public class Home extends Interface {
 			public void actionPerformed(ActionEvent arg0) {
 				String serv = ip.getText();
 				if(SearchServers.isServer(serv)){
-					insereServ(serv);
+					insertServ(serv);
 					lock = false;
 				}else{
 					JOptionPane.showMessageDialog(null, "Servidor inválido!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
@@ -75,7 +75,7 @@ public class Home extends Interface {
 		SwingUtilities.invokeLater(new Runnable(){public void run(){add.requestFocus();}});
 		p.add(add);
 		
-		JTable table = new JTable(dados, colunas){
+		JTable table = new JTable(data, cols){
 			private static final long serialVersionUID = 1L;
 			
 			public boolean isCellEditable(int row, int col){ 
@@ -118,12 +118,12 @@ public class Home extends Interface {
 		p.add(con);
 		
 		if(OS.indexOf("win") >= 0){
-			JButton busca = new JButton("Procurar na LAN");
-			busca.addActionListener(new ActionListener() {
+			JButton search = new JButton("Procurar na LAN");
+			search.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					if(!lock){
 						load.setVisible(true);
-						busca.setText("Parar");
+						search.setText("Parar");
 						servers = new SearchServers();
 						Thread thSearch = new Thread(servers);
 						thSearch.start();
@@ -131,15 +131,15 @@ public class Home extends Interface {
 					}else{
 						if(servers != null) servers.stop();
 						load.setVisible(false);
-						busca.setText("Procurar na LAN");
+						search.setText("Procurar na LAN");
 						lock = false;
 					}
 				}
 			});
 			
-			busca.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			busca.setBounds(160, 310, 130, 30);
-			p.add(busca);
+			search.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			search.setBounds(160, 310, 130, 30);
+			p.add(search);
 
 			try{
 				load = new JLabel(new ImageIcon(getClass().getResource("/load-30.gif")));
@@ -152,13 +152,13 @@ public class Home extends Interface {
 		}
 	}
 	
-	public static void insereServ(String nome){
+	public static void insertServ(String nome){
 		if(servs.contains(nome.toUpperCase())) return;
 		servs.add(nome.toUpperCase());
 		updateTable();
 	}
 	
-	public static void insereServ(String nome, String ip){
+	public static void insertServ(String nome, String ip){
 		if(servs.contains(nome.toUpperCase())) return;
 		if(servs.contains(ip.toUpperCase())) return;
 		servs.add(nome.toUpperCase());
@@ -169,10 +169,10 @@ public class Home extends Interface {
 		String[] temp = new String[servs.size()];
 		servs.toArray(temp);
 		if(temp.length > 13){
-			dados = new String[temp.length][1];
+			data = new String[temp.length][1];
 		}
 		for (int i = 0; i < temp.length; i++) {
-			dados[i][0] = temp[i];
+			data[i][0] = temp[i];
 		}
 		tab.repaint();
 	}

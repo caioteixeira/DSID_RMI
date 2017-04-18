@@ -31,8 +31,10 @@ public class Home extends Interface {
 	private String[] cols = {"SERVIDOR"};
 	private static String OS = System.getProperty("os.name").toLowerCase();
 	private String select = null;
+	private ArrayList<String> subParts = new ArrayList<String>();
 	
 	public Home(){
+		setBounds(100, 100, 350, 380); // setBounds(x, y, largura, altura)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JTextField ip = new JTextField("Digite o NOME ou IP");
 		ip.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -94,8 +96,6 @@ public class Home extends Interface {
 	        }
 	    });
 		
-		tab = new JScrollPane();
-		tab.setVisible(true);
 		tab = new JScrollPane(table);
 		tab.setBounds(5, 70, 335, 231);
 		p.add(tab);
@@ -106,7 +106,7 @@ public class Home extends Interface {
 				if(select == null || select.equals("")){
 					JOptionPane.showMessageDialog(null, "Selecione um servidor válido!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 				}else{
-					Connect con = new Connect(select);
+					Connect con = new Connect(select, subParts);
 					con.setVisible(true);
 					dispose();
 				}

@@ -8,7 +8,6 @@ public class Interface extends JFrame  {
 	public JPanel p;
 
 	public Interface(){
-		setBounds(100, 100, 350, 380); // setBounds(x, y, largura, altura)
 		setResizable(false);
 		
 		p = new JPanel();

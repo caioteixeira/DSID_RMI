@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class MainServer 
 {
-	public static void RunServer()
+	public static void RunServer(String serverName)
 	{
 		try
 		{
@@ -13,7 +13,7 @@ public class MainServer
 			IPartRepository repo = (IPartRepository) UnicastRemoteObject.exportObject(pr, 0);
 			
 			Registry registry = LocateRegistry.createRegistry(1099);
-			registry.bind("IPartRepository", repo);
+			registry.bind(serverName, repo);
 			
             System.err.println("Server ready");
 		}
@@ -27,6 +27,13 @@ public class MainServer
 	
 	public static void main(String[] args) 
 	{
-		RunServer();
+		String serverName = "IPartRepository";
+		
+		if(args.length >= 1)
+		{
+			serverName = args[0];
+		}
+		
+		RunServer(serverName);
 	}
 }

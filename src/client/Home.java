@@ -36,6 +36,7 @@ public class Home extends Interface {
 	public Home(){
 		setBounds(100, 100, 350, 380); // setBounds(x, y, largura, altura)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		JTextField ip = new JTextField("Digite o NOME ou IP");
 		ip.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ip.setBounds(25, 20, 150, 30); // setBounds(x, y, largura, altura)

@@ -106,21 +106,27 @@ public class Connect extends Interface{
 			tab.setBounds(5, 70, 335, 231);
 			p.add(tab);
 			
+
 			JButton det = new JButton("Detalhes");
-			det.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					
-				}
-			});
-			
 			det.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			det.setBounds(10, 310, 125, 30);
+			det.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					try{
+					Interface newp = new DetailsPart(host, pr.getPart(1));
+					newp.setVisible(true);
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			});
 			p.add(det);
 			
 			JButton newPart = new JButton("Nova Peça");
 			newPart.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					
+					Interface newp = new NewPart(host, subParts);
+					newp.setVisible(true);
 				}
 			});
 			
@@ -136,7 +142,6 @@ public class Connect extends Interface{
 			
 			JList<Object> listSubParts = new JList<Object>(subParts.toArray());
 			listSubParts.setFont(new Font("Tahoma", Font.PLAIN, 12));
-			listSubParts.setBounds(360, 70, 170, 20);
 			listSubParts.setLayoutOrientation(JList.VERTICAL);
 			
 			JScrollPane paneList = new JScrollPane(listSubParts);

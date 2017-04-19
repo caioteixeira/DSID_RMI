@@ -1,12 +1,20 @@
 package server;
 import java.rmi.RemoteException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.LinkedList;
 
 public class PartRepository implements IPartRepository {
+	
+	Dictionary<Integer, IPart> parts;
 	
 	public PartRepository() throws RemoteException 
 	{
 		super();
-		// TODO Auto-generated constructor stub
+		parts = new Hashtable<Integer, IPart>();
 	}
 	
 	public String teste() throws RemoteException
@@ -15,23 +23,29 @@ public class PartRepository implements IPartRepository {
 	}
 
 	@Override
-	public void insertPart(IPart p) throws RemoteException
+	public void insertPart(int cod, String name, String desc, int[] subparts) throws RemoteException
 	{
-		// TODO Auto-generated method stub
+		Part p = new Part(cod, name, desc, subparts);
 		
+		parts.put(cod, p);
 	}
 
 	@Override
 	public IPart getPart(int cod) throws RemoteException
 	{
-		return new Part();
+		return parts.get(cod);
 	}
 
 	@Override
 	public IPart[] getAllParts() throws RemoteException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Enumeration<Integer> keys = parts.keys();
+		ArrayList<IPart> partList = new ArrayList<IPart>();
+		while(keys.hasMoreElements())
+		{
+			partList.add(parts.get(keys.nextElement()));
+		}
+		return (IPart[]) partList.toArray();
 	}
 
 }

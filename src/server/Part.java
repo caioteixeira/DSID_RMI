@@ -5,27 +5,33 @@ import java.rmi.RemoteException;
 public class Part implements IPart {
 	private static final long serialVersionUID = 1L;
 
-	public Part() throws RemoteException 
+	int cod;
+	String name;
+	String desc;
+	int[] subParts;
+	
+	public Part(int cod, String name, String desc, int[] subParts) throws RemoteException 
 	{
 		super();
-		// TODO Auto-generated constructor stub
+		
+		this.cod = cod;
+		this.name = name;
+		this.desc = desc;
+		this.subParts = subParts;
 	}
 	@Override
 	public int getCod() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.cod;
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return "parte";
+		return this.name;
 	}
 
 	@Override
 	public String getDesc() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.desc;
 	}
 
 	@Override

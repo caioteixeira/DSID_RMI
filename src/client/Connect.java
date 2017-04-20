@@ -86,6 +86,7 @@ public class Connect extends Interface{
 						if(part != null){
 							Interface psearch = new DetailsPart(host, part);
 							psearch.setVisible(true);
+							dispose();
 						}else{
 							JOptionPane.showMessageDialog(null, "Peça não encontrada!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 						}

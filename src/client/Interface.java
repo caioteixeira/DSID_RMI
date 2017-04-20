@@ -5,7 +5,7 @@ import javax.swing.border.EmptyBorder;
 
 public class Interface extends JFrame  {
 	private static final long serialVersionUID = 1L;
-	public JPanel p;
+	public static JPanel p;
 
 	public Interface(){
 		setResizable(false);

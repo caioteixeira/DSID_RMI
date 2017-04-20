@@ -1,11 +1,9 @@
 package server;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.LinkedList;
 
 public class PartRepository implements IPartRepository {
 	
@@ -17,13 +15,13 @@ public class PartRepository implements IPartRepository {
 		parts = new Hashtable<Integer, IPart>();
 	}
 	
-	public String teste() throws RemoteException
+	public String test() throws RemoteException
 	{
 		return "teste";
 	}
 
 	@Override
-	public void insertPart(int cod, String name, String desc, int[] subparts) throws RemoteException
+	public void insertPart(int cod, String name, String desc, Dictionary<Integer, Integer> subparts) throws RemoteException
 	{
 		Part p = new Part(cod, name, desc, subparts);
 		
@@ -37,7 +35,7 @@ public class PartRepository implements IPartRepository {
 	}
 
 	@Override
-	public IPart[] getAllParts() throws RemoteException
+	public ArrayList<IPart> getAllParts() throws RemoteException
 	{
 		Enumeration<Integer> keys = parts.keys();
 		ArrayList<IPart> partList = new ArrayList<IPart>();
@@ -45,7 +43,7 @@ public class PartRepository implements IPartRepository {
 		{
 			partList.add(parts.get(keys.nextElement()));
 		}
-		return (IPart[]) partList.toArray();
+		return partList;
 	}
 
 }

@@ -1,6 +1,7 @@
 package server;
 
 import java.rmi.RemoteException;
+import java.util.Dictionary;
 
 public class Part implements IPart {
 	private static final long serialVersionUID = 1L;
@@ -8,9 +9,9 @@ public class Part implements IPart {
 	int cod;
 	String name;
 	String desc;
-	int[] subParts;
+	Dictionary<Integer, Integer> subParts;
 	
-	public Part(int cod, String name, String desc, int[] subParts) throws RemoteException 
+	public Part(int cod, String name, String desc, Dictionary<Integer, Integer> subParts) throws RemoteException 
 	{
 		super();
 		
@@ -35,9 +36,9 @@ public class Part implements IPart {
 	}
 
 	@Override
-	public IPart[][] getListSubParts() {
+	public Dictionary<Integer, Integer> getListSubParts() {
 		// TODO Auto-generated method stub
-		return null;
+		return subParts;
 	}
 
 }

@@ -1,22 +1,40 @@
 package client;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Enumeration;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+
+import server.IPartRepository;
 
 public class NewPart extends Interface {
 	private static final long serialVersionUID = 1L;
-	public NewPart(String host, ArrayList<String> subParts){
+	private static String[][] datasp;
+	public NewPart(String host, IPartRepository pr){
+		addWindowListener(new WindowAdapter()
+		{
+		    public void windowClosing(WindowEvent e)
+		    {
+		    	Interface conn = new Connect(host);
+				conn.setVisible(true);
+				dispose();
+		    }
+		});
 		setBounds(100, 100, 510, 250); // setBounds(x, y, largura, altura)
 		setTitle("Servidor: " + host);
+		fillTableSubPart();
 		
 		JLabel lname = new JLabel("Nome: ");
 		lname.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -47,7 +65,19 @@ public class NewPart extends Interface {
 		JButton createPart = new JButton("Criar Peça");
 		createPart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				try{
+					if(name.getText().equals("")){
+						JOptionPane.showMessageDialog(null, "Preencha o nome." ,"Erro",JOptionPane.INFORMATION_MESSAGE);
+						return;
+					}
+					pr.insertPart(MainClient.getCod(), name.getText(), desc.getText(), MainClient.subParts);
+					MainClient.subParts.clear();
+					Interface conn = new Connect(host);
+					conn.setVisible(true);
+					dispose();
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -61,9 +91,19 @@ public class NewPart extends Interface {
 		titleSubParts.setVisible(true);
 		p.add(titleSubParts);
 		
-		JList<Object> listSubParts = new JList<Object>(subParts.toArray());
+		String[] subCols = new String[] {"Nome","QTD"}; 
+		JTable listSubParts = new JTable(datasp, subCols){
+			private static final long serialVersionUID = 1L;
+			
+			public boolean isCellEditable(int row, int col){ 
+				return false; 
+			} 
+		};
+		
 		listSubParts.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		listSubParts.setLayoutOrientation(JList.VERTICAL);
+		listSubParts.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		listSubParts.setBackground(Color.WHITE);
+		listSubParts.getColumnModel().getColumn(1).setPreferredWidth(15);
 		
 		JScrollPane paneList = new JScrollPane(listSubParts);
 		paneList.setBounds(315, 35, 180, 135);
@@ -72,12 +112,27 @@ public class NewPart extends Interface {
 		JButton clearList = new JButton("Apagar Subpeças");
 		clearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				MainClient.subParts.clear();
+				Interface np = new NewPart(host, pr);
+				np.setVisible(true);
+				dispose();
 			}
 		});
 		
 		clearList.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		clearList.setBounds(315, 180, 180, 30);
 		p.add(clearList);
+	}
+	
+	private static void fillTableSubPart(){
+		datasp = new String[MainClient.subParts.size()][2];
+		int i = 0;
+		Enumeration<Integer> keys = MainClient.subParts.keys();
+		while(keys.hasMoreElements()){
+			int cod = keys.nextElement();
+			datasp[i][0] = Connect.getPart(cod).getName();
+			datasp[i][1] = MainClient.subParts.get(cod).toString();
+			i++;
+		}
 	}
 }

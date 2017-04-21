@@ -33,7 +33,6 @@ public class Connect extends Interface{
 	private static String[][] datasp = null;
 	private String[] cols = {"NOME","DESCRIÇÃO", "CÓDIGO"};
 	private IPart currentPart = null;
-	private static int i = 0;
 	private static JScrollPane paneList;
 	
 	public Connect(String host){
@@ -84,7 +83,7 @@ public class Connect extends Interface{
 					try{
 						IPart part = pr.getPart(Integer.parseInt(search.getText()));
 						if(part != null){
-							Interface psearch = new DetailsPart(host, part);
+							Interface psearch = new DetailsPart(host, part, pr);
 							psearch.setVisible(true);
 							dispose();
 						}else{
@@ -137,7 +136,7 @@ public class Connect extends Interface{
 				public void actionPerformed(ActionEvent arg0) {
 					try{
 						if(currentPart != null){
-							Interface detp = new DetailsPart(host, currentPart);
+							Interface detp = new DetailsPart(host, currentPart, pr);
 							detp.setVisible(true);
 							dispose();
 						}else{
@@ -217,11 +216,11 @@ public class Connect extends Interface{
 	private static void fillTableSubPart(){
 		datasp = new String[MainClient.subParts.size()][2];
 		int i = 0;
-		Enumeration<Integer> keys = MainClient.subParts.keys();
+		Enumeration<IPart> keys = MainClient.subParts.keys();
 		while(keys.hasMoreElements()){
-			int cod = keys.nextElement();
-			datasp[i][0] = Connect.getPart(cod).getName();
-			datasp[i][1] = MainClient.subParts.get(cod).toString();
+			IPart p = keys.nextElement();
+			datasp[i][0] = p.getName();
+			datasp[i][1] = MainClient.subParts.get(p).toString();
 			i++;
 		}
 	}
@@ -229,32 +228,12 @@ public class Connect extends Interface{
 	public String[] getAllNames(){
 		String[] names = new String[MainClient.subParts.size()];
 		int i = 0;
-		Enumeration<Integer> keys = MainClient.subParts.keys();
+		Enumeration<IPart> keys = MainClient.subParts.keys();
 		while(keys.hasMoreElements()){
-			int cod = keys.nextElement();
-			names[i] = Connect.getPart(cod).getName();
+			IPart p = keys.nextElement();
+			names[i] = p.getName();
 			i++;
 		}
 		return names;
-	}
-	
-	public static IPart getPart(int cod){
-		try{
-			while(i < MainClient.servs.size()) {
-				Registry registry = LocateRegistry.getRegistry(MainClient.servs.get(i));
-				IPartRepository pr = (IPartRepository) registry.lookup("IPartRepository");
-				IPart p = pr.getPart(cod);
-				if(p != null){
-					i = 0;
-					return p;
-				}
-				i++;
-			}
-		}catch(Exception e){
-			i++;
-			return getPart(cod);
-		}
-		i = 0;
-		return null;
 	}
 }

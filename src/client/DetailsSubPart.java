@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Dictionary;
 import java.util.Enumeration;
 
@@ -23,23 +21,13 @@ import javax.swing.event.ListSelectionListener;
 import server.IPart;
 import server.IPartRepository;
 
-public class DetailsPart extends Interface {
+public class DetailsSubPart extends Interface {
 	private static final long serialVersionUID = 1L;
 	private String[][] data = null;
 	private String[] cols = {"NOME","QTD", "COD"};
-	private IPart currentSubPart = null;
+	private IPart currentPart = null;
 	
-	public DetailsPart(String host, IPart part, IPartRepository pr){
-		addWindowListener(new WindowAdapter()
-		{
-		    public void windowClosing(WindowEvent e)
-		    {
-		    	Interface conn = new Connect(host);
-				conn.setVisible(true);
-				dispose();
-		    }
-		});
-		
+	public DetailsSubPart(String host, IPart part, IPartRepository pr){
 		setBounds(100, 100, 550, 305); // setBounds(x, y, largura, altura)
 		setTitle("Servidor: " + host);
 		
@@ -94,7 +82,7 @@ public class DetailsPart extends Interface {
 		JButton createPart = new JButton("Adicionar como Subpeça");
 		createPart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				SubPart sp = new SubPart(host, part);
+				SsubPart sp = new SsubPart(host, part);
 				sp.setVisible(true);
 				dispose();
 			}
@@ -124,7 +112,7 @@ public class DetailsPart extends Interface {
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
 	        public void valueChanged(ListSelectionEvent event) {
 	        	try{
-	        		currentSubPart = pr.getPart(Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(), 2).toString()));
+	        		currentPart = pr.getPart(Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(), 2).toString()));
 	        	}catch(Exception e){
 	        		e.printStackTrace();
 	        	}
@@ -144,8 +132,8 @@ public class DetailsPart extends Interface {
 		det.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					if(currentSubPart != null){
-						Interface detp = new DetailsSubPart(host, currentSubPart, pr);
+					if(currentPart != null){
+						Interface detp = new DetailsSubPart(host, currentPart, pr);
 						detp.setVisible(true);
 					}else{
 						JOptionPane.showMessageDialog(null, "Selecione uma Subpeça." ,"Erro",JOptionPane.INFORMATION_MESSAGE);
@@ -176,19 +164,10 @@ public class DetailsPart extends Interface {
 	}
 }
 
-class SubPart extends Interface {
+class SsubPart extends Interface {
 	private static final long serialVersionUID = 1L;
 
-	public SubPart(String host, IPart part) {
-		addWindowListener(new WindowAdapter()
-		{
-		    public void windowClosing(WindowEvent e)
-		    {
-		    	Interface conn = new Connect(host);
-				conn.setVisible(true);
-				dispose();
-		    }
-		});
+	public SsubPart(String host, IPart part) {
 		setBounds(100, 100, 420, 190); // setBounds(x, y, largura, altura)
 		setTitle(host);
 		
@@ -215,8 +194,6 @@ class SubPart extends Interface {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					MainClient.subParts.put(part, Integer.parseInt(qtd.getText()));
-					Interface conn = new Connect(host);
-					conn.setVisible(true);
 					dispose();
 				}catch(Exception e){
 					JOptionPane.showMessageDialog(null, "Quantidade inválida!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);

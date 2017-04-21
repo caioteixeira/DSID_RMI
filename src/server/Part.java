@@ -9,9 +9,9 @@ public class Part implements IPart {
 	int cod;
 	String name;
 	String desc;
-	Dictionary<Integer, Integer> subParts;
+	Dictionary<IPart, Integer> subParts;
 	
-	public Part(int cod, String name, String desc, Dictionary<Integer, Integer> subParts) throws RemoteException 
+	public Part(int cod, String name, String desc, Dictionary<IPart, Integer> subParts) throws RemoteException 
 	{
 		super();
 		
@@ -36,8 +36,8 @@ public class Part implements IPart {
 	}
 
 	@Override
-	public Dictionary<Integer, Integer> getListSubParts() {
-		// TODO Auto-generated method stub
+	public Dictionary<IPart, Integer> getListSubParts() {
+		
 		return subParts;
 	}
 

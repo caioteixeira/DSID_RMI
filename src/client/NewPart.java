@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import server.IPart;
 import server.IPartRepository;
 
 public class NewPart extends Interface {
@@ -70,7 +71,7 @@ public class NewPart extends Interface {
 						JOptionPane.showMessageDialog(null, "Preencha o nome." ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
-					pr.insertPart(MainClient.getCod(), name.getText(), desc.getText(), MainClient.subParts);
+					pr.insertPart(name.getText(), desc.getText(), MainClient.subParts);
 					MainClient.subParts.clear();
 					Interface conn = new Connect(host);
 					conn.setVisible(true);
@@ -127,11 +128,11 @@ public class NewPart extends Interface {
 	private static void fillTableSubPart(){
 		datasp = new String[MainClient.subParts.size()][2];
 		int i = 0;
-		Enumeration<Integer> keys = MainClient.subParts.keys();
+		Enumeration<IPart> keys = MainClient.subParts.keys();
 		while(keys.hasMoreElements()){
-			int cod = keys.nextElement();
-			datasp[i][0] = Connect.getPart(cod).getName();
-			datasp[i][1] = MainClient.subParts.get(cod).toString();
+			IPart p = keys.nextElement();
+			datasp[i][0] = p.getName();
+			datasp[i][1] = MainClient.subParts.get(p).toString();
 			i++;
 		}
 	}

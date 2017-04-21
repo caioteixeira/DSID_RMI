@@ -8,6 +8,7 @@ import java.util.Hashtable;
 public class PartRepository implements IPartRepository {
 	
 	Dictionary<Integer, IPart> parts;
+	private int cod = 1;
 	
 	public PartRepository() throws RemoteException 
 	{
@@ -21,11 +22,11 @@ public class PartRepository implements IPartRepository {
 	}
 
 	@Override
-	public void insertPart(int cod, String name, String desc, Dictionary<Integer, Integer> subparts) throws RemoteException
+	public void insertPart(String name, String desc, Dictionary<IPart, Integer> subparts) throws RemoteException
 	{
 		Part p = new Part(cod, name, desc, subparts);
-		
 		parts.put(cod, p);
+		cod++;
 	}
 
 	@Override

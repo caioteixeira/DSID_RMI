@@ -22,9 +22,9 @@ public class PartRepository implements IPartRepository {
 	}
 
 	@Override
-	public void insertPart(String name, String desc, Dictionary<IPart, Integer> subparts) throws RemoteException
+	public void insertPart(String name, String desc, Dictionary<IPart, Integer> subparts, String host) throws RemoteException
 	{
-		Part p = new Part(cod, name, desc, subparts);
+		Part p = new Part(cod, name, desc, subparts, host);
 		parts.put(cod, p);
 		cod++;
 	}

@@ -83,7 +83,7 @@ public class Connect extends Interface{
 					try{
 						IPart part = pr.getPart(Integer.parseInt(search.getText()));
 						if(part != null){
-							Interface psearch = new DetailsPart(host, part, pr);
+							Interface psearch = new DetailsPart(host, part);
 							psearch.setVisible(true);
 							dispose();
 						}else{
@@ -136,7 +136,7 @@ public class Connect extends Interface{
 				public void actionPerformed(ActionEvent arg0) {
 					try{
 						if(currentPart != null){
-							Interface detp = new DetailsPart(host, currentPart, pr);
+							Interface detp = new DetailsPart(host, currentPart);
 							detp.setVisible(true);
 							dispose();
 						}else{

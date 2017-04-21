@@ -71,7 +71,7 @@ public class NewPart extends Interface {
 						JOptionPane.showMessageDialog(null, "Preencha o nome." ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 						return;
 					}
-					pr.insertPart(name.getText(), desc.getText(), MainClient.subParts);
+					pr.insertPart(name.getText(), desc.getText(), MainClient.subParts, host);
 					MainClient.subParts.clear();
 					Interface conn = new Connect(host);
 					conn.setVisible(true);

@@ -107,8 +107,14 @@ public class Details extends Interface {
 		JScrollPane  tab = new JScrollPane();
 		tab.setVisible(true);
 		tab = new JScrollPane(table);
-		tab.setBounds(315, 35, 225, 185);
+		tab.setBounds(315, 35, 225, 160);
 		p.add(tab);
+		
+		JLabel totalSubParts = new JLabel("Total de Subpeças: " + total(part.getListSubParts()));
+		totalSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
+		totalSubParts.setBounds(315, 200, 300, 20);
+		totalSubParts.setVisible(true);
+		p.add(totalSubParts);
 	}
 	
 	public void fillTable(Dictionary<IPart, Integer> parts){
@@ -126,5 +132,14 @@ public class Details extends Interface {
 			subparts.add(p);
 			i++;
 		}
+	}
+	
+	public int total(Dictionary<IPart, Integer> parts){
+		int total = 0;
+		Enumeration<IPart> eParts = parts.keys();
+		while(eParts.hasMoreElements()){
+			total+= parts.get(eParts.nextElement());
+		}
+		return total;
 	}
 }

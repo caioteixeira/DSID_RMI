@@ -1,6 +1,7 @@
 package client;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import server.IPart;
@@ -20,5 +21,14 @@ public class MainClient {
 				}
 			}
 		});
+	}
+	
+	public static int total(){
+		int total = 0;
+		Enumeration<IPart> eParts = MainClient.subParts.keys();
+		while(eParts.hasMoreElements()){
+			total+= MainClient.subParts.get(eParts.nextElement());
+		}
+		return total;
 	}
 }

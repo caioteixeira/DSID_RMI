@@ -16,7 +16,6 @@ import server.IPart;
 
 public class DetailsSubPart extends Details {
 	private static final long serialVersionUID = 1L;
-	private IPart currentPart = null;
 	
 	public DetailsSubPart(IPart part){
 		super(part);
@@ -39,8 +38,8 @@ public class DetailsSubPart extends Details {
 		det.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					if(currentPart != null){
-						Interface detp = new DetailsSubPart(currentPart);
+					if(currentSubPart != null){
+						Interface detp = new DetailsSubPart(currentSubPart);
 						detp.setVisible(true);
 					}else{
 						JOptionPane.showMessageDialog(null, "Selecione uma Subpeça." ,"Erro",JOptionPane.INFORMATION_MESSAGE);

@@ -107,8 +107,14 @@ public class NewPart extends Interface {
 		listSubParts.getColumnModel().getColumn(1).setPreferredWidth(15);
 		
 		JScrollPane paneList = new JScrollPane(listSubParts);
-		paneList.setBounds(315, 35, 180, 135);
+		paneList.setBounds(315, 35, 180, 120);
 		p.add(paneList);
+		
+		JLabel totalSubParts = new JLabel("Total de Subpeças: " + MainClient.total());
+		totalSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
+		totalSubParts.setBounds(315, 155, 300, 20);
+		totalSubParts.setVisible(true);
+		p.add(totalSubParts);
 		
 		JButton clearList = new JButton("Apagar Subpeças");
 		clearList.addActionListener(new ActionListener() {

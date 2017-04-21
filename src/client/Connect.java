@@ -125,8 +125,14 @@ public class Connect extends Interface{
 			tab = new JScrollPane();
 			tab.setVisible(true);
 			tab = new JScrollPane(table);
-			tab.setBounds(5, 70, 335, 231);
+			tab.setBounds(5, 70, 335, 216);
 			p.add(tab);
+			
+			JLabel totalParts = new JLabel("Quantidade de Peças: " + datap.length);
+			totalParts.setFont(new Font("Tahoma", Font.BOLD, 12));
+			totalParts.setBounds(5, 286, 300, 20);
+			totalParts.setVisible(true);
+			p.add(totalParts);
 			
 
 			JButton det = new JButton("Detalhes");
@@ -183,8 +189,14 @@ public class Connect extends Interface{
 			listSubParts.getColumnModel().getColumn(1).setPreferredWidth(15);
 			
 			paneList = new JScrollPane(listSubParts);
-			paneList.setBounds(360, 70, 170, 231);
+			paneList.setBounds(360, 70, 170, 216);
 			p.add(paneList);
+			
+			JLabel totalSubParts = new JLabel("Total de Subpeças: " + MainClient.total());
+			totalSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
+			totalSubParts.setBounds(360, 286, 300, 20);
+			totalSubParts.setVisible(true);
+			p.add(totalSubParts);
 			
 			JButton clearList = new JButton("Apagar Subpeças");
 			clearList.addActionListener(new ActionListener() {

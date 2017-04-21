@@ -3,12 +3,14 @@ import java.awt.EventQueue;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.rmi.registry.Registry;
 
 import server.IPart;
 
 public class MainClient {
 	public static ArrayList<String> servs = new ArrayList<String>();
 	public static Hashtable<IPart, Integer> subParts = new Hashtable<IPart, Integer>();
+	public static Registry registry;
 	
 	public static void main(String[] args){
 		EventQueue.invokeLater(new Runnable() {

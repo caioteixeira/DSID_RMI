@@ -35,7 +35,7 @@ public class Connect extends Interface{
 	private IPart currentPart = null;
 	private static JScrollPane paneList;
 	
-	public Connect(String host){
+	public Connect(String name){
 		try{
 			addWindowListener(new WindowAdapter()
 			{
@@ -47,13 +47,13 @@ public class Connect extends Interface{
 			    }
 			});
 			
-			Registry registry = LocateRegistry.getRegistry(host);
-			IPartRepository pr = (IPartRepository) registry.lookup("IPartRepository");
+			Registry registry = MainClient.registry;
+			IPartRepository pr = (IPartRepository) registry.lookup(name);
 			fillTablePart(pr.getAllParts());
 			fillTableSubPart();
 			
 			setBounds(100, 100, 550, 380);
-			setTitle("Servidor: " + host);
+			setTitle("Servidor: " + name);
 			
 			JTextField search = new JTextField("Digite o código");
 			search.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -83,7 +83,7 @@ public class Connect extends Interface{
 					try{
 						IPart part = pr.getPart(Integer.parseInt(search.getText()));
 						if(part != null){
-							Interface psearch = new DetailsPart(host, part);
+							Interface psearch = new DetailsPart(name, part);
 							psearch.setVisible(true);
 							dispose();
 						}else{
@@ -142,7 +142,7 @@ public class Connect extends Interface{
 				public void actionPerformed(ActionEvent arg0) {
 					try{
 						if(currentPart != null){
-							Interface detp = new DetailsPart(host, currentPart);
+							Interface detp = new DetailsPart(name, currentPart);
 							detp.setVisible(true);
 							dispose();
 						}else{
@@ -158,7 +158,7 @@ public class Connect extends Interface{
 			JButton newPart = new JButton("Nova Peça");
 			newPart.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					Interface newp = new NewPart(host, pr);
+					Interface newp = new NewPart(name, pr);
 					newp.setVisible(true);
 					dispose();
 				}
@@ -202,7 +202,7 @@ public class Connect extends Interface{
 			clearList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					MainClient.subParts.clear();
-					Interface con = new Connect(host);
+					Interface con = new Connect(name);
 					con.setVisible(true);
 					dispose();
 				}

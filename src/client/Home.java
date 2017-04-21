@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,14 +31,14 @@ public class Home extends Interface {
 		setBounds(100, 100, 350, 380); // setBounds(x, y, largura, altura)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JTextField ip = new JTextField("Digite o NOME ou IP");
+		JTextField ip = new JTextField("Digite o IP do Registry");
 		ip.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		ip.setBounds(25, 20, 150, 30); // setBounds(x, y, largura, altura)
 		ip.setForeground(Color.GRAY);
 		ip.addFocusListener(new FocusListener() {
 		    @Override
 		    public void focusGained(FocusEvent e) {
-		        if (ip.getText().equals("Digite o NOME ou IP")) {
+		        if (ip.getText().equals("Digite o IP do Registry")) {
 		        	ip.setText("");
 		        	ip.setForeground(Color.BLACK);
 		        }
@@ -50,14 +53,14 @@ public class Home extends Interface {
 		    });
 		p.add(ip);
 		
-		JButton add = new JButton("Adicionar Servidor");
+		JButton add = new JButton("Acessar Registry");
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String serv = ip.getText();
 				if(CheckServer.isServer(serv)){
-					insertServ(serv);
+					insertRegistry(serv);
 				}else{
-					JOptionPane.showMessageDialog(null, "Servidor inválido!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Registry não encontrado!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -91,11 +94,11 @@ public class Home extends Interface {
 		tab.setBounds(5, 70, 335, 231);
 		p.add(tab);
 		
-		JButton con = new JButton("Acessar Servidor");
+		JButton con = new JButton("Acessar Repositório");
 		con.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(select == null || select.equals("")){
-					JOptionPane.showMessageDialog(null, "Selecione um servidor válido!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Selecione um repositório válido!" ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 				}else{
 					Connect con = new Connect(select);
 					con.setVisible(true);
@@ -105,21 +108,31 @@ public class Home extends Interface {
 		});
 		
 		con.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		con.setBounds(10, 310, 135, 30);
+		con.setBounds(10, 310, 150, 30);
 		p.add(con);
 	}
 	
-	public static void insertServ(String nome){
-		if(MainClient.servs.contains(nome.toUpperCase())) return;
-		MainClient.servs.add(nome.toUpperCase());
-		updateTable();
-	}
-	
-	public static void insertServ(String nome, String ip){
-		if(MainClient.servs.contains(nome.toUpperCase())) return;
-		if(MainClient.servs.contains(ip.toUpperCase())) return;
-		MainClient.servs.add(nome.toUpperCase());
-		updateTable();
+	public static void insertRegistry(String host){
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(host);
+			String[] names = registry.list();
+			MainClient.registry = registry;
+			
+			MainClient.servs.clear();
+			
+			for(int i = 0; i < names.length; i++)
+			{
+				String name = names[i];
+				
+				MainClient.servs.add(name);
+			}
+			
+			updateTable();
+			
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void updateTable(){

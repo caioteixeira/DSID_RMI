@@ -11,11 +11,7 @@ public class CheckServer{
 		try
 		{			
 			System.out.println("IsServer: " + host);
-			Registry registry = LocateRegistry.getRegistry(host);
-			IPartRepository repo = (IPartRepository) registry.lookup("IPartRepository");
-			String response = repo.test();
-			System.out.println("Response: " + response);
-			
+			Registry registry = LocateRegistry.getRegistry(host);		
 			return true;
 		}
 		catch(Exception e){     

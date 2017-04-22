@@ -86,7 +86,7 @@ public class NewPart extends Interface {
 		createPart.setBounds(15, 180, 100, 30);
 		p.add(createPart);
 		
-		JLabel titleSubParts = new JLabel("SUBPEÇAS ATUAIS");
+		JLabel titleSubParts = new JLabel("SUB-PEÇAS ATUAIS");
 		titleSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 		titleSubParts.setBounds(345, 0, 300, 40);
 		titleSubParts.setVisible(true);
@@ -110,13 +110,13 @@ public class NewPart extends Interface {
 		paneList.setBounds(315, 35, 180, 120);
 		p.add(paneList);
 		
-		JLabel totalSubParts = new JLabel("Total de Subpeças: " + MainClient.total());
+		JLabel totalSubParts = new JLabel("Total de Sub-peças: " + MainClient.total());
 		totalSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 		totalSubParts.setBounds(315, 155, 300, 20);
 		totalSubParts.setVisible(true);
 		p.add(totalSubParts);
 		
-		JButton clearList = new JButton("Apagar Subpeças");
+		JButton clearList = new JButton("Apagar Sub-peças");
 		clearList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MainClient.subParts.clear();

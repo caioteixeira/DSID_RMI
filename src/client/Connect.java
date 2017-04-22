@@ -7,7 +7,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -172,7 +171,7 @@ public class Connect extends Interface{
 			newPart.setBounds(160, 310, 130, 30);
 			p.add(newPart);
 			
-			JLabel titleSubParts = new JLabel("SUBPEÇAS ATUAIS");
+			JLabel titleSubParts = new JLabel("SUB-PEÇAS ATUAIS");
 			titleSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 			titleSubParts.setBounds(390, 25, 300, 40);
 			titleSubParts.setVisible(true);
@@ -196,13 +195,13 @@ public class Connect extends Interface{
 			paneList.setBounds(360, 70, 170, 216);
 			p.add(paneList);
 			
-			JLabel totalSubParts = new JLabel("Total de Subpeças: " + MainClient.total());
+			JLabel totalSubParts = new JLabel("Total de Sub-peças: " + MainClient.total());
 			totalSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 			totalSubParts.setBounds(360, 286, 300, 20);
 			totalSubParts.setVisible(true);
 			p.add(totalSubParts);
 			
-			JButton clearList = new JButton("Apagar Subpeças");
+			JButton clearList = new JButton("Apagar Sub-peças");
 			clearList.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					MainClient.subParts.clear();

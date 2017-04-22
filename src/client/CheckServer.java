@@ -2,8 +2,6 @@ package client;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import server.IPartRepository;
-
 public class CheckServer{
 	
 	public static boolean isServer(String host)

@@ -1,8 +1,5 @@
 package server;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.rmi.AlreadyBoundException;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
@@ -35,7 +32,7 @@ public class MainServer
 			catch (AlreadyBoundException e)
 			{
 				System.out.println("An existent repository already uses the same name, please use a different name!");
-				return;
+				System.exit(0);
 			}
 			
             System.err.println("Server ready");

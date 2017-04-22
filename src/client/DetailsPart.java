@@ -29,7 +29,7 @@ public class DetailsPart extends Details {
 		    }
 		});
 		
-		JButton createPart = new JButton("Adicionar como Subpeça");
+		JButton createPart = new JButton("Adicionar como Sub-peça");
 		createPart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SubPart sp = new SubPart(host, part);
@@ -52,7 +52,7 @@ public class DetailsPart extends Details {
 						Interface detp = new DetailsSubPart(currentSubPart);
 						detp.setVisible(true);
 					}else{
-						JOptionPane.showMessageDialog(null, "Selecione uma Subpeça." ,"Erro",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Selecione uma Sub-peça." ,"Erro",JOptionPane.INFORMATION_MESSAGE);
 					}
 				}catch(Exception e){
 					e.printStackTrace();
@@ -97,7 +97,7 @@ class SubPart extends Interface {
 		qtd.setBounds(110, 55, 50, 30); // setBounds(x, y, width, height)
 		p.add(qtd);
 		
-		JButton addSubPart = new JButton("Adicionar Subpeça");
+		JButton addSubPart = new JButton("Adicionar Sub-peça");
 		addSubPart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{

@@ -77,7 +77,7 @@ public class Details extends Interface {
 		paneDesc.setBounds(100, 120, 200, 100);
 		p.add(paneDesc);
 		
-		JLabel titleSubParts = new JLabel("SUBPEÇAS");
+		JLabel titleSubParts = new JLabel("SUB-PEÇAS");
 		titleSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 		titleSubParts.setBounds(395, 0, 300, 40);
 		titleSubParts.setVisible(true);
@@ -110,7 +110,7 @@ public class Details extends Interface {
 		tab.setBounds(315, 35, 225, 160);
 		p.add(tab);
 		
-		JLabel totalSubParts = new JLabel("Total de Subpeças: " + total(part.getListSubParts()));
+		JLabel totalSubParts = new JLabel("Total de Sub-peças: " + total(part.getListSubParts()));
 		totalSubParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 		totalSubParts.setBounds(315, 200, 300, 20);
 		totalSubParts.setVisible(true);

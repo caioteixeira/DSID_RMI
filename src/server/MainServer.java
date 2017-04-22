@@ -1,4 +1,6 @@
 package server;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -11,20 +13,22 @@ public class MainServer
 	{
 		try
 		{
-			PartRepository pr = new PartRepository();
-			IPartRepository repo = (IPartRepository) UnicastRemoteObject.exportObject(pr, 0);
-			
 			Registry registry;
 			try
 			{
 				registry = LocateRegistry.getRegistry(registryHost, 1099);
+				registry.list();
 			}
-			catch(RemoteException e)
+			catch(Exception e)
 			{
-				System.out.println("Could not locate remote registry, creating a new local one!");
+				System.out.println("Could not locate remote registry, creating a new local one!");	
 				registry = LocateRegistry.createRegistry(1099);
 			}
-	
+			
+			System.setProperty("java.rmi.server.hostname", serverName);
+			
+			PartRepository pr = new PartRepository();
+			IPartRepository repo = (IPartRepository) UnicastRemoteObject.exportObject(pr, 0);
 			
 			try
 			{
@@ -49,7 +53,13 @@ public class MainServer
 	public static void main(String[] args) 
 	{
 		String serverName = "IPartRepository";
-		String registryHost = "127.0.0.1";
+		String registryHost;
+		try {
+			registryHost = InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			return;
+		}
 		
 		if(args.length >= 1)
 		{

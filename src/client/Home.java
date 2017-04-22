@@ -117,7 +117,10 @@ public class Home extends Interface {
 		try {
 			registry = LocateRegistry.getRegistry(host);
 			String[] names = registry.list();
-			MainClient.registry = registry;
+			MainClient.registry = registry;		
+			MainClient.registryHost = host;
+			
+			System.setProperty("java.rmi.server.hostname", host);
 			
 			MainClient.servs.clear();
 			

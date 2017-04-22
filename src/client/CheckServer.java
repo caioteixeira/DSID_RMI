@@ -11,7 +11,8 @@ public class CheckServer{
 		try
 		{			
 			System.out.println("IsServer: " + host);
-			Registry registry = LocateRegistry.getRegistry(host);		
+			Registry registry = LocateRegistry.getRegistry(host);
+			registry.list();
 			return true;
 		}
 		catch(Exception e){     

@@ -24,9 +24,7 @@ public class MainServer
 				System.out.println("Could not locate remote registry, creating a new local one!");	
 				registry = LocateRegistry.createRegistry(1099);
 			}
-			
-			System.setProperty("java.rmi.server.hostname", serverName);
-			
+						
 			PartRepository pr = new PartRepository();
 			IPartRepository repo = (IPartRepository) UnicastRemoteObject.exportObject(pr, 0);
 			
@@ -53,13 +51,7 @@ public class MainServer
 	public static void main(String[] args) 
 	{
 		String serverName = "IPartRepository";
-		String registryHost;
-		try {
-			registryHost = InetAddress.getLocalHost().getHostAddress();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			return;
-		}
+		String registryHost = "127.0.0.1";
 		
 		if(args.length >= 1)
 		{

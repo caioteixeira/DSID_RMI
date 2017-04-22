@@ -11,6 +11,7 @@ public class MainClient {
 	public static ArrayList<String> servs = new ArrayList<String>();
 	public static Hashtable<IPart, Integer> subParts = new Hashtable<IPart, Integer>();
 	public static Registry registry;
+	public static String registryHost;
 	
 	public static void main(String[] args){
 		EventQueue.invokeLater(new Runnable() {

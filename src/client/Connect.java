@@ -48,6 +48,10 @@ public class Connect extends Interface{
 			});
 			
 			Registry registry = MainClient.registry;
+			if(registry == null)
+			{
+				return;
+			}
 			IPartRepository pr = (IPartRepository) registry.lookup(name);
 			fillTablePart(pr.getAllParts());
 			fillTableSubPart();
